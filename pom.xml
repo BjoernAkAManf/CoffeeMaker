@@ -32,58 +32,30 @@
                 <directory>src/main/java/artifacter-sources</directory>
             </resource>
         </resources>
+        
         <plugins>
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <version>2.2.0</version>
+                
                 <executions>
                     <execution>
                         <goals>
                             <goal>revision</goal>
-                         </goals>
+                        </goals>
                     </execution>
                 </executions>
 
                 <configuration>
-                    <!--
-                        If you'd like to tell the plugin where your .git directory is,
-                        use this setting, otherwise we'll perform a search trying to
-                        figure out the right directory. It's better to add it explicite IMHO.
-                    -->
-                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-
-                    <!-- false is default here, it prints some more information during the build -->
-                    <verbose>true</verbose>
-
-                    <!-- ALTERNATE SETUP - GENERATE FILE -->
-                    <!--
-                        If you want to keep git information, even in your WAR file etc,
-                        use this mode, which will generate a properties file (with filled out values)
-                        which you can then normally read using new Properties().load(/**/)
-                    -->
-
-                    <!-- this is false by default, forces the plugin to generate the git.properties file -->
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-
-                    <!-- Denotes the format to save properties in. Valid options are "properties" (default) and "json". Properties will be saved to the generateGitPropertiesFilename if generateGitPropertiesFile is set to `true`. -->
-                    <format>properties</format>
-
-                    <!-- @since v2.2.0 -->
-                    <!--
-                         The option can be used to tell the plugin how it should generate the 'git.commit.id' property. Due to some naming issues when exporting the properties as an json-object (https://github.com/ktoso/maven-git-commit-id-plugin/issues/122) we needed to make it possible to export all properties as a valid json-object.
-                         Due to the fact that this is one of the major properties the plugin is exporting we just don't want to change the exporting mechanism and somehow throw the backwards compatibility away.
-                         We rather provide a convient switch where you can choose if you would like the properties as they always had been, or if you rather need to support full json-object compatibility.
-                         In the case you need to fully support json-object we unfortunately need to change the 'git.commit.id' property from 'git.commit.id' to 'git.commit.id.full' in the exporting mechanism to allow the generation of a fully valid json object.
-
-                         Currently the switch allows two different options:
-                         1. By default this property is set to 'flat' and will generate the formerly known property 'git.commit.id' as it was in the previous versions of the plugin. Keeping it to 'flat' by default preserve backwards compatibility and does not require further adjustments by the end user.
-                         2. If you set this switch to 'full' the plugin will export the formerly known property 'git.commit.id' as 'git.commit.id.full' and therefore will generate a fully valid json object in the exporting mechanism.
-
-                         *Note*: Depending on your plugin configuration you obviously can choose the 'prefix' of your properties by setting it accordingly in the plugin's configuration. As a result this is therefore only an illustration what the switch means when the 'prefix' is set to it's default value.
-                         *Note*: If you set the value to something that's not equal to 'flat' or 'full' (ignoring the case) the plugin will output a warning and will fallback to the default 'flat' mode.
-                    -->
-                    <commitIdGenerationMode>flat</commitIdGenerationMode>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                    
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.dirty$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.full$</includeOnlyProperty>
+                    </includeOnlyProperties>
                 </configuration>
             </plugin>
             
