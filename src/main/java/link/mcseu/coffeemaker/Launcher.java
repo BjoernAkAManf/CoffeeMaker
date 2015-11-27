@@ -12,6 +12,8 @@ import link.mcseu.coffeemaker.api.CoffeeMachine;
 import link.mcseu.coffeemaker.api.Pot;
 import link.mcseu.coffeemaker.git.Build;
 import link.mcseu.coffeemaker.git.GitLoader;
+import link.mcseu.coffeemaker.git.GitUpdater;
+import link.mcseu.coffeemaker.git.Updater;
 import link.mcseu.coffeemaker.impl.machine.MachineModule;
 import link.mcseu.coffeemaker.impl.pot.PotModule;
 
@@ -35,9 +37,16 @@ public class Launcher {
 
             // Get Information about Build
             final Build build = GitLoader.create(Launcher.class);
-
+            final Updater updater = new GitUpdater();
+                
             // TODO: Check for Updates
             System.out.println(build.getCommit() + " " + build.getCommiterEmail());
+            
+            if (updater.updateable(build)) {
+                System.out.println("Running latest Version");
+            } else {
+                System.out.println("Running old Version");
+            }
             
             new Launcher();
         } catch (InterruptedException ex) {

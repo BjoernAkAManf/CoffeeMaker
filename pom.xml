@@ -24,6 +24,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>4.1.1.201511131810-r</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -55,6 +61,7 @@
                         <includeOnlyProperty>^git.dirty$</includeOnlyProperty>
                         <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
                         <includeOnlyProperty>^git.commit.id.full$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.branch$</includeOnlyProperty>
                     </includeOnlyProperties>
                 </configuration>
             </plugin>

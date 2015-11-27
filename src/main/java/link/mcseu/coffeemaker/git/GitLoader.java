@@ -16,12 +16,17 @@ public class GitLoader implements Build {
         return get("git.dirty")
                 .equalsIgnoreCase("true");
     }
-    
+
+    @Override
+    public String getBranch() {
+        return get("git.branch");
+    }
+
     @Override
     public String getCommit() {
         return get("git.commit.id.full");
     }
-    
+
     @Override
     public String getCommiterEmail() {
         return get("git.commit.user.email");
@@ -31,7 +36,7 @@ public class GitLoader implements Build {
     public String getCommiterName() {
         return get("git.commit.user.name");
     }
-    
+
     // TODO: Preconditions
     private String get(String key) {
         return handle.getProperty(key);
