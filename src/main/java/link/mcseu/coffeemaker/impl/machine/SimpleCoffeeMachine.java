@@ -1,9 +1,11 @@
 package link.mcseu.coffeemaker.impl.machine;
 
+import com.google.auto.service.AutoService;
 import java.util.concurrent.TimeUnit;
 import link.mcseu.coffeemaker.api.CoffeeMachine;
 import link.mcseu.coffeemaker.api.Pot;
 
+@AutoService(CoffeeMachine.class)
 public class SimpleCoffeeMachine implements CoffeeMachine {
     @Override
     public boolean makeCoffee(Pot pot) throws InterruptedException {
